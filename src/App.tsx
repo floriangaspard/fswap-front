@@ -4,7 +4,7 @@ import { getDefaultProvider } from 'ethers'
 import { Wallet, Web3Wallet } from '@/features/wallet'
 import { Swap } from '@/features/swap'
 import { Pool } from '@/features/pool'
-import { Tab, Tabs } from '@/components/UI'
+import { Tabs } from '@/components/UI'
 import { NETWORKS } from './features/wallet/utils/networks'
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
         ready: false,
     })
 
-    const [activeTab, setActiveTab] = useState<Tab>(Tab.swap)
+    const [activeTab, setActiveTab] = useState<number>(0)
 
     useEffect(() => {
         const checkNetwork = async () => {
@@ -58,9 +58,13 @@ function App() {
             <div className="flex text-center flex-col bg-white p-5 rounded-md drop-shadow-lg w-[400px]">
                 <Web3Wallet wallet={wallet} setWallet={setWallet} />
                 <div className="w-full">
-                    <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+                    <Tabs
+                        activeTab={activeTab}
+                        setActiveTab={setActiveTab}
+                        names={['Swap', 'Pool']}
+                    />
                     <div className="w-full">
-                        {activeTab === Tab.swap ? (
+                        {activeTab === 0 ? (
                             <Swap wallet={wallet} />
                         ) : (
                             <Pool wallet={wallet} />
