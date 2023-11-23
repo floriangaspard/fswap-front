@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { getDefaultProvider } from 'ethers'
 
-import { Wallet, Web3Wallet } from '@/features/wallet'
+import { Wallet } from '@/features/wallet'
 import { Swap } from '@/features/swap'
-import { Pool } from '@/features/pool'
-import { Tabs } from '@/components/UI'
 import { NETWORKS } from './features/wallet/utils/networks'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { Root } from './routes/root'
+import { Pool } from './features/pool'
 
 function App() {
     const defaultProvider = () => {
@@ -21,8 +22,6 @@ function App() {
         network: 0n,
         ready: false,
     })
-
-    const [activeTab, setActiveTab] = useState<number>(0)
 
     useEffect(() => {
         const checkNetwork = async () => {
@@ -53,27 +52,24 @@ function App() {
         }
     })
 
-    return (
-        <div className="App flex text-center items-center flex-col h-screen justify-center bg-white">
-            <div className="flex text-center flex-col bg-white p-5 rounded-md drop-shadow-lg w-[400px]">
-                <Web3Wallet wallet={wallet} setWallet={setWallet} />
-                <div className="w-full">
-                    <Tabs
-                        activeTab={activeTab}
-                        setActiveTab={setActiveTab}
-                        names={['Swap', 'Pool']}
-                    />
-                    <div className="w-full">
-                        {activeTab === 0 ? (
-                            <Swap wallet={wallet} />
-                        ) : (
-                            <Pool wallet={wallet} />
-                        )}
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
+    const router = createBrowserRouter([
+        {
+            path: '/',
+            element: <Root wallet={wallet} setWallet={setWallet} />,
+            children: [
+                {
+                    path: 'swap',
+                    element: <Swap wallet={wallet} />,
+                },
+                {
+                    path: 'pool',
+                    element: <Pool wallet={wallet} />,
+                },
+            ],
+        },
+    ])
+
+    return <RouterProvider router={router} />
 }
 
 export default App
