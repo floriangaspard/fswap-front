@@ -3,7 +3,6 @@ import { Wallet, Web3Wallet } from '../Wallet'
 import {
     AbstractProvider,
     BrowserProvider,
-    JsonRpcProvider,
     JsonRpcSigner,
     getDefaultProvider,
 } from 'ethers'

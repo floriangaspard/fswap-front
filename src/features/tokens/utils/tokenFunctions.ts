@@ -15,11 +15,6 @@ export const formatToDecimals = (amount: bigint, decimals: string) => {
     return Number(amount) / Number(10n ** BigInt(decimals))
 }
 
-export const getDecimals = async (token: string, contract: Contract) => {
-    if (isERC20(token)) return await contract.decimals()
-    return '18'
-}
-
 export const checkAllowance = async (
     token: string,
     amount: bigint,
