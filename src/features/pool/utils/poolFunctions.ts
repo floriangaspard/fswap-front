@@ -15,8 +15,11 @@ export const getAssetRatio = async (poolContract: Contract) => {
     return ratio
 }
 
-export const isFirstToken = (token: string) => {
-    if (pools.find((t) => t.token0 === token) !== undefined) {
+export const isFirstToken = (token0: string, token1: string) => {
+    if (
+        pools.find((t) => t.token0 === token0 && t.token1 === token1) !==
+        undefined
+    ) {
         return true
     }
     return false

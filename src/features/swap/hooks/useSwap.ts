@@ -67,12 +67,13 @@ export const useSwap = (wallet: Wallet, token0: string, token1: string) => {
         }
 
         await poolContract!.swap(
-            isFirstToken(token0),
+            isFirstToken(token0, token1),
             formatFromDecimals(Number(amount0), decimals0),
             value
         )
 
-        setCurrentSwapState(SWAP_STATE.SWAPPED)
+        _setAmount0('')
+        _setAmount1('')
     }
 
     const setAmount0 = async (amount: string) => {
@@ -82,8 +83,7 @@ export const useSwap = (wallet: Wallet, token0: string, token1: string) => {
 
         if (amountn > 0) {
             const { b0, b1, liquidity } = await getPoolData(poolContract!)
-
-            if (isFirstToken(token0))
+            if (isFirstToken(token0, token1))
                 _setAmount1(
                     formatToDecimals(
                         b1 - liquidity / (b0 + amountn),
@@ -106,14 +106,13 @@ export const useSwap = (wallet: Wallet, token0: string, token1: string) => {
 
         if (amountn > 0) {
             const { b0, b1, liquidity } = await getPoolData(poolContract!)
-
-            if (isFirstToken(token1) && isERC20(token1) && amountn > b0)
+            if (isFirstToken(token1, token0) && isERC20(token1) && amountn > b0)
                 setCurrentSwapState(SWAP_STATE.INSUFFICIENTLIQUIDITY)
             else if (isERC20(token1) && amountn > b1)
                 setCurrentSwapState(SWAP_STATE.INSUFFICIENTLIQUIDITY)
             else setCurrentSwapState(SWAP_STATE.INITIAL)
 
-            if (isFirstToken(token0))
+            if (isFirstToken(token0, token1))
                 _setAmount0(
                     Math.abs(
                         formatToDecimals(
