@@ -12,8 +12,7 @@ import {
 import { DEPOSITE_STATE, DepositState } from '../types/DepositState'
 import { tokenList } from '../../../constants/addresses'
 import ERC20abi from '../../../constants/ERC20.json'
-import { getAssetRatio } from '../utils/poolFunctions'
-import { usePoolContract } from './usePoolContract'
+import { getAssetRatio, usePoolContract } from '@/features/pool'
 
 export const usePool = (wallet: Wallet, token0: string, token1: string) => {
     const [currentDepositState, setCurrentDepositState] =
@@ -97,7 +96,9 @@ export const usePool = (wallet: Wallet, token0: string, token1: string) => {
             formatFromDecimals(Number(amount1), decimals1),
             value
         )
-        setCurrentDepositState(DEPOSITE_STATE.SENT)
+
+        _setAmount0('')
+        _setAmount1('')
     }
 
     useEffect(() => {

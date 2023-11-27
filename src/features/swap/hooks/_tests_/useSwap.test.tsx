@@ -45,22 +45,22 @@ jest.mock('@/features/pool', () => ({
     }),
 }))
 
+let browserProvider = BrowserProvider as jest.Mocked<typeof BrowserProvider>
+let jsonRpcSigner = JsonRpcSigner as jest.Mocked<typeof JsonRpcSigner>
+
+let wallet: Wallet = {
+    defaultProvider: new AbstractProvider(),
+    browserProvider: browserProvider.prototype,
+    network: NETWORKS['sepolia'],
+    signer: jsonRpcSigner.prototype,
+    ready: true,
+}
+
 beforeEach(() => {
     ;(useDecimals as jest.Mock).mockImplementation(() => '15')
 })
 
 test('initial values', () => {
-    let browserProvider = BrowserProvider as jest.Mocked<typeof BrowserProvider>
-    let jsonRpcSigner = JsonRpcSigner as jest.Mocked<typeof JsonRpcSigner>
-
-    let wallet: Wallet = {
-        defaultProvider: new AbstractProvider(),
-        browserProvider: browserProvider.prototype,
-        network: NETWORKS['sepolia'],
-        signer: jsonRpcSigner.prototype,
-        ready: true,
-    }
-
     const { result } = renderHook(() => useSwap(wallet, 'AAA', 'BBB'))
 
     expect(result.current.amount0).toBe('')
@@ -75,17 +75,6 @@ test('set valid token0 amount', async () => {
             allowance: jest.fn(() => Promise.resolve('10000000000000000')),
         }
     })
-
-    let browserProvider = BrowserProvider as jest.Mocked<typeof BrowserProvider>
-    let jsonRpcSigner = JsonRpcSigner as jest.Mocked<typeof JsonRpcSigner>
-
-    let wallet: Wallet = {
-        defaultProvider: new AbstractProvider(),
-        browserProvider: browserProvider.prototype,
-        network: NETWORKS['sepolia'],
-        signer: jsonRpcSigner.prototype,
-        ready: true,
-    }
 
     const { result } = renderHook(() => useSwap(wallet, 'AAA', 'BBB'))
 
@@ -110,17 +99,6 @@ test('set valid token1 amount', async () => {
         }
     })
 
-    let browserProvider = BrowserProvider as jest.Mocked<typeof BrowserProvider>
-    let jsonRpcSigner = JsonRpcSigner as jest.Mocked<typeof JsonRpcSigner>
-
-    let wallet: Wallet = {
-        defaultProvider: new AbstractProvider(),
-        browserProvider: browserProvider.prototype,
-        network: NETWORKS['sepolia'],
-        signer: jsonRpcSigner.prototype,
-        ready: true,
-    }
-
     const { result } = renderHook(() => useSwap(wallet, 'AAA', 'BBB'))
 
     act(() => {
@@ -143,17 +121,6 @@ test('set valid token0 amount inverse tokens', async () => {
             allowance: jest.fn(() => Promise.resolve('10000000000000000')),
         }
     })
-
-    let browserProvider = BrowserProvider as jest.Mocked<typeof BrowserProvider>
-    let jsonRpcSigner = JsonRpcSigner as jest.Mocked<typeof JsonRpcSigner>
-
-    let wallet: Wallet = {
-        defaultProvider: new AbstractProvider(),
-        browserProvider: browserProvider.prototype,
-        network: NETWORKS['sepolia'],
-        signer: jsonRpcSigner.prototype,
-        ready: true,
-    }
 
     const { result } = renderHook(() => useSwap(wallet, 'BBB', 'AAA'))
 
@@ -178,17 +145,6 @@ test('set valid token1 amount inverse tokens', async () => {
         }
     })
 
-    let browserProvider = BrowserProvider as jest.Mocked<typeof BrowserProvider>
-    let jsonRpcSigner = JsonRpcSigner as jest.Mocked<typeof JsonRpcSigner>
-
-    let wallet: Wallet = {
-        defaultProvider: new AbstractProvider(),
-        browserProvider: browserProvider.prototype,
-        network: NETWORKS['sepolia'],
-        signer: jsonRpcSigner.prototype,
-        ready: true,
-    }
-
     const { result } = renderHook(() => useSwap(wallet, 'BBB', 'AAA'))
 
     act(() => {
@@ -211,17 +167,6 @@ test('set token1 amount insufficient liquidity', async () => {
             allowance: jest.fn(() => Promise.resolve('10000000000000000')),
         }
     })
-
-    let browserProvider = BrowserProvider as jest.Mocked<typeof BrowserProvider>
-    let jsonRpcSigner = JsonRpcSigner as jest.Mocked<typeof JsonRpcSigner>
-
-    let wallet: Wallet = {
-        defaultProvider: new AbstractProvider(),
-        browserProvider: browserProvider.prototype,
-        network: NETWORKS['sepolia'],
-        signer: jsonRpcSigner.prototype,
-        ready: true,
-    }
 
     const { result } = renderHook(() => useSwap(wallet, 'AAA', 'BBB'))
 
@@ -246,17 +191,6 @@ test('approve token', async () => {
             Approve: jest.fn(() => Promise.resolve()),
         }
     })
-
-    let browserProvider = BrowserProvider as jest.Mocked<typeof BrowserProvider>
-    let jsonRpcSigner = JsonRpcSigner as jest.Mocked<typeof JsonRpcSigner>
-
-    let wallet: Wallet = {
-        defaultProvider: new AbstractProvider(),
-        browserProvider: browserProvider.prototype,
-        network: NETWORKS['sepolia'],
-        signer: jsonRpcSigner.prototype,
-        ready: true,
-    }
 
     const { result } = renderHook(() => useSwap(wallet, 'AAA', 'BBB'))
 
@@ -293,17 +227,6 @@ test('swap token', async () => {
             allowance: jest.fn(() => Promise.resolve('10000000000000000')),
         }
     })
-
-    let browserProvider = BrowserProvider as jest.Mocked<typeof BrowserProvider>
-    let jsonRpcSigner = JsonRpcSigner as jest.Mocked<typeof JsonRpcSigner>
-
-    let wallet: Wallet = {
-        defaultProvider: new AbstractProvider(),
-        browserProvider: browserProvider.prototype,
-        network: NETWORKS['sepolia'],
-        signer: jsonRpcSigner.prototype,
-        ready: true,
-    }
 
     const { result } = renderHook(() => useSwap(wallet, 'AAA', 'BBB'))
 
