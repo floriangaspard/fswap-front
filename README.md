@@ -11,6 +11,11 @@
 
 ![Portfolio](public/fswap.png)
 
+# About
+
+Front-end for [Fswap contracts](https://github.com/floriangaspard/fswap-contracts)
+Contracts are deployed on Sepolias testnet only.
+
 Built with React + TypeScript and TailwindCSS.
 
 # Installation
