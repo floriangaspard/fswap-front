@@ -14,7 +14,7 @@
 # About
 
 Front-end for [Fswap contracts](https://github.com/floriangaspard/fswap-contracts)
-Contracts are deployed on Sepolias testnet only.
+Contracts are deployed on Sepolia testnet only.
 
 Built with React + TypeScript and TailwindCSS.
 

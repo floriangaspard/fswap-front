@@ -4,7 +4,7 @@ import { getDefaultProvider } from 'ethers'
 import { Wallet } from '@/features/wallet'
 import { Swap } from '@/features/swap'
 import { NETWORKS } from './features/wallet/utils/networks'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Root } from './routes/root'
 import { Pool } from './features/pool'
 
@@ -57,6 +57,7 @@ function App() {
             path: '/',
             element: <Root wallet={wallet} setWallet={setWallet} />,
             children: [
+                { index: true, element: <Navigate to="/swap" replace /> },
                 {
                     path: 'swap',
                     element: <Swap wallet={wallet} />,
