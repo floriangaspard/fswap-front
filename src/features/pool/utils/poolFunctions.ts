@@ -38,3 +38,14 @@ export const getPoolData = async (poolContract: Contract) => {
 
     return { b0, b1, liquidity }
 }
+
+export const getProviderData = async (
+    poolContract: Contract,
+    address: string
+) => {
+    return BigInt(await poolContract.providers(address))
+}
+
+export const getTotalTokens = async (poolContract: Contract) => {
+    return BigInt(await poolContract.tokens())
+}

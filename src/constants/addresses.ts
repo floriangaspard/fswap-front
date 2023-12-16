@@ -7,6 +7,6 @@ export const pools = [
     {
         token0: 'ETH',
         token1: 'FTK',
-        pool: '0x16069cDc22eC891EDF9B3d878cD5B11d4a1E8025',
+        pool: '0xD72Af54B37c74c99584941032E9629fe8c57633d',
     },
 ]

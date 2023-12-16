@@ -149,5 +149,6 @@ export const usePool = (wallet: Wallet, token0: string, token1: string) => {
         onApprove,
         onSendToPool,
         getButtonValue,
+        poolContract,
     }
 }
