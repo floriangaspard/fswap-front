@@ -116,7 +116,7 @@ test('approve tokens', async () => {
     ;(Contract as jest.Mock).mockImplementation(() => {
         return {
             allowance: jest.fn(() => Promise.resolve('2000000000000000000')),
-            Approve: jest.fn(),
+            approve: jest.fn(),
         }
     })
 
@@ -130,7 +130,7 @@ test('approve tokens', async () => {
     ;(Contract as jest.Mock).mockImplementation(() => {
         return {
             allowance: jest.fn(() => Promise.resolve('4000000000000000000')),
-            Approve: jest.fn(),
+            approve: jest.fn(),
         }
     })
 

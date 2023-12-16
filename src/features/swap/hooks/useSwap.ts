@@ -54,7 +54,7 @@ export const useSwap = (wallet: Wallet, token0: string, token1: string) => {
             ERC20abi,
             wallet.signer
         )
-        await contract.Approve(poolAddress!, 2n ** 256n - 1n)
+        await contract.approve(poolAddress!, 2n ** 256n - 1n)
         setCurrentSwapState((currentSwapState + 1) as SwapState)
     }
 

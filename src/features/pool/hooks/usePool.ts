@@ -72,14 +72,14 @@ export const usePool = (wallet: Wallet, token0: string, token1: string) => {
                 ERC20abi,
                 wallet.browserProvider
             )
-            await ERC20Contract.Approve(poolAddress, 2n ** 256n - 1n)
+            await ERC20Contract.approve(poolAddress, 2n ** 256n - 1n)
         } else if (currentDepositState === DEPOSITE_STATE.APPROVE1) {
             const contract = new Contract(
                 tokenList[token1],
                 ERC20abi,
                 wallet.signer
             )
-            await contract.Approve(poolAddress, 2n ** 256n - 1n)
+            await contract.approve(poolAddress, 2n ** 256n - 1n)
         }
         setCurrentDepositState((currentDepositState + 1) as DepositState)
     }
