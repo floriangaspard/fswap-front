@@ -145,6 +145,8 @@ export const usePool = (wallet: Wallet, token0: string, token1: string) => {
         setAmount0,
         amount1,
         setAmount1,
+        decimals0,
+        decimals1,
         currentDepositState,
         onApprove,
         onSendToPool,

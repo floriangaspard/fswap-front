@@ -17,6 +17,8 @@ export function Pool(props: PoolProps) {
         setAmount0,
         amount1,
         setAmount1,
+        decimals0,
+        decimals1,
         currentDepositState,
         onApprove,
         onSendToPool,
@@ -63,6 +65,8 @@ export function Pool(props: PoolProps) {
                 token0={token0}
                 token1={token1}
                 wallet={props.wallet}
+                decimals0={decimals0}
+                decimals1={decimals1}
                 poolContract={poolContract}
             />
         </div>

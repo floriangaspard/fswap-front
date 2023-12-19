@@ -16,7 +16,7 @@ export function Root(props: RootProps) {
                         <NavLink
                             className={({ isActive }) =>
                                 isActive
-                                    ? ' w-full bg-stone-100 p-4 rounded-md m-1 cursor-pointer bg-gradient-to-r from-cyan-100 to-blue-100'
+                                    ? ' w-full p-4 rounded-md m-1 cursor-pointer bg-gradient-to-r from-cyan-100 to-blue-100'
                                     : 'w-full bg-stone-100 p-4 rounded-md m-1 cursor-pointer'
                             }
                             to={'swap'}
@@ -26,7 +26,7 @@ export function Root(props: RootProps) {
                         <NavLink
                             className={({ isActive }) =>
                                 isActive
-                                    ? 'w-full bg-stone-100 p-4 rounded-md m-1 cursor-pointer bg-gradient-to-r from-cyan-100 to-blue-100'
+                                    ? 'w-full p-4 rounded-md m-1 cursor-pointer bg-gradient-to-r from-cyan-100 to-blue-100'
                                     : 'w-full bg-stone-100 p-4 rounded-md m-1 cursor-pointer'
                             }
                             to={'pool'}
