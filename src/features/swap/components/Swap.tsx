@@ -4,6 +4,8 @@ import { Wallet } from '@/features/wallet'
 import { tokenList } from '../../../constants/addresses'
 import { useSwap } from '../hooks/useSwap'
 import { SWAP_STATE } from '../types/SwapState'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 interface SwapProps {
     wallet: Wallet
@@ -20,6 +22,7 @@ export function Swap(props: SwapProps) {
         onApprove,
         onSwap,
         getButtonValue,
+        txWait,
     } = useSwap(props.wallet, token0, token1)
 
     return (
@@ -48,9 +51,16 @@ export function Swap(props: SwapProps) {
                 disabled={
                     currentSwapState === SWAP_STATE.INITIAL ||
                     currentSwapState === SWAP_STATE.INSUFFICIENTLIQUIDITY ||
-                    !props.wallet.ready
+                    !props.wallet.ready ||
+                    txWait
                 }
             >
+                {txWait && (
+                    <FontAwesomeIcon
+                        icon={faSpinner}
+                        className="animate-spin mr-3"
+                    />
+                )}
                 {getButtonValue()}
             </button>
         </div>

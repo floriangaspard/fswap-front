@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Contract } from 'ethers'
+import { Contract, ContractTransactionResponse } from 'ethers'
 
 import { Wallet } from '@/features/wallet'
 import {
@@ -29,6 +29,8 @@ export const usePool = (wallet: Wallet, token0: string, token1: string) => {
         token0,
         token1
     )
+
+    const [txWait, setTxWait] = useState<boolean>(false)
 
     const setAmount0 = async (amount: string) => {
         if (Number(amount) >= 0) _setAmount0(amount)
@@ -66,22 +68,28 @@ export const usePool = (wallet: Wallet, token0: string, token1: string) => {
     }
 
     const onApprove = async () => {
+        let tx: ContractTransactionResponse | null = null
         if (currentDepositState === DEPOSITE_STATE.APPROVE0) {
             const ERC20Contract = new Contract(
                 tokenList[token0],
                 ERC20abi,
                 wallet.browserProvider
             )
-            await ERC20Contract.approve(poolAddress, 2n ** 256n - 1n)
+            tx = await ERC20Contract.approve(poolAddress, 2n ** 256n - 1n)
         } else if (currentDepositState === DEPOSITE_STATE.APPROVE1) {
             const contract = new Contract(
                 tokenList[token1],
                 ERC20abi,
                 wallet.signer
             )
-            await contract.approve(poolAddress, 2n ** 256n - 1n)
+            tx = await contract.approve(poolAddress, 2n ** 256n - 1n)
         }
-        setCurrentDepositState((currentDepositState + 1) as DepositState)
+        if (tx) {
+            setTxWait(true)
+            await tx.wait()
+            setTxWait(false)
+            setCurrentDepositState((currentDepositState + 1) as DepositState)
+        }
     }
 
     const onSendToPool = async () => {
@@ -91,11 +99,15 @@ export const usePool = (wallet: Wallet, token0: string, token1: string) => {
                 value: formatFromDecimals(Number(amount0), decimals0),
             }
         }
-        await poolContract!.deposit(
+        const tx = await poolContract!.deposit(
             formatFromDecimals(Number(amount0), decimals0),
             formatFromDecimals(Number(amount1), decimals1),
             value
         )
+
+        setTxWait(true)
+        await tx.wait()
+        setTxWait(false)
 
         _setAmount0('')
         _setAmount1('')
@@ -152,5 +164,6 @@ export const usePool = (wallet: Wallet, token0: string, token1: string) => {
         onSendToPool,
         getButtonValue,
         poolContract,
+        txWait,
     }
 }

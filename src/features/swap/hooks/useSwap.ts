@@ -32,6 +32,8 @@ export const useSwap = (wallet: Wallet, token0: string, token1: string) => {
         SWAP_STATE.INITIAL
     )
 
+    const [txWait, setTxWait] = useState<boolean>(false)
+
     const getButtonValue = () => {
         let value = 'Swap'
         if (
@@ -54,7 +56,10 @@ export const useSwap = (wallet: Wallet, token0: string, token1: string) => {
             ERC20abi,
             wallet.signer
         )
-        await contract.approve(poolAddress!, 2n ** 256n - 1n)
+        const tx = await contract.approve(poolAddress!, 2n ** 256n - 1n)
+        setTxWait(true)
+        await tx.wait()
+        setTxWait(false)
         setCurrentSwapState((currentSwapState + 1) as SwapState)
     }
 
@@ -66,11 +71,15 @@ export const useSwap = (wallet: Wallet, token0: string, token1: string) => {
             }
         }
 
-        await poolContract!.swap(
+        const tx = await poolContract!.swap(
             isFirstToken(token0, token1),
             formatFromDecimals(Number(amount0), decimals0),
             value
         )
+
+        setTxWait(true)
+        await tx.wait()
+        setTxWait(false)
 
         _setAmount0('')
         _setAmount1('')
@@ -177,5 +186,6 @@ export const useSwap = (wallet: Wallet, token0: string, token1: string) => {
         onApprove,
         onSwap,
         getButtonValue,
+        txWait,
     }
 }

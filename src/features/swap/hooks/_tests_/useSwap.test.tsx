@@ -39,7 +39,9 @@ jest.mock('@/features/pool', () => ({
     }),
     usePoolContract: () => ({
         poolContract: {
-            swap: jest.fn(() => Promise.resolve()),
+            swap: jest.fn(() =>
+                Promise.resolve({ wait: () => Promise.resolve() })
+            ),
         },
         poolAddress: '0x001',
     }),
@@ -188,7 +190,9 @@ test('approve token', async () => {
     ;(Contract as jest.Mock).mockImplementation(() => {
         return {
             allowance: jest.fn(() => Promise.resolve('1000000000000000')),
-            approve: jest.fn(() => Promise.resolve()),
+            approve: jest.fn(() =>
+                Promise.resolve({ wait: () => Promise.resolve() })
+            ),
         }
     })
 

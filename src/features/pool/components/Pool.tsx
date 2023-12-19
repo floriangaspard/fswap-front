@@ -5,6 +5,8 @@ import { tokenList } from '../../../constants/addresses'
 import { usePool } from '../hooks/usePool'
 import { DEPOSITE_STATE } from '../types/DepositState'
 import { Provider } from './Provider'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 
 interface PoolProps {
     wallet: Wallet
@@ -24,6 +26,7 @@ export function Pool(props: PoolProps) {
         onSendToPool,
         getButtonValue,
         poolContract,
+        txWait,
     } = usePool(props.wallet, token0, token1)
 
     return (
@@ -55,9 +58,16 @@ export function Pool(props: PoolProps) {
                     }
                     disabled={
                         currentDepositState === DEPOSITE_STATE.INITIAL ||
-                        !props.wallet.ready
+                        !props.wallet.ready ||
+                        txWait
                     }
                 >
+                    {txWait && (
+                        <FontAwesomeIcon
+                            icon={faSpinner}
+                            className="animate-spin mr-3"
+                        />
+                    )}
                     {getButtonValue()}
                 </button>
             </div>
