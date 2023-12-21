@@ -1,9 +1,5 @@
 import { useEffect, useState } from 'react'
-import {
-    getPoolData,
-    getProviderData,
-    getTotalTokens,
-} from '../utils/poolFunctions'
+import { getPoolData, getProviderData, getTotalTokens } from '@/features/pool'
 import { Wallet } from '@/features/wallet'
 import { Contract } from 'ethers'
 import { formatToDecimals } from '@/features/tokens'
