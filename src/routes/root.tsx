@@ -54,6 +54,9 @@ export function Root(props: RootProps) {
                     </div>
                 </div>
             </div>
+            <p className="text-xs text-center">
+                2024 - <a href="https://floriangaspard.com">Florian Gaspard</a>
+            </p>
         </div>
     )
 }
